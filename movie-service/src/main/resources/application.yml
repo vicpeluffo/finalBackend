@@ -1,0 +1,7 @@
+idRandom: ${random.value}
+spring:
+  application:
+    name: movie-service
+  config:
+    import: optional:configserver:http://localhost:8888
+

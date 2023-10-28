@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  zipkin:
+    base-url: http://localhost:9411/
+    enabled: true
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: catalogRoute
+          uri: lb://catalog-service/
+          predicates:
+            - Path=/catalog/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+    healthcheck:
+      enabled: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
