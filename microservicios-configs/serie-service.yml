@@ -1,0 +1,60 @@
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+  context-path: /api/v1/series
+
+idRandom: ${random.value}
+spring:
+  zipkin:
+    base-url: http://localhost:9411/
+    enabled: true
+  application:
+    name: serie-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/teffidev/microservicios-configs/tree/main
+        enabled: false
+  mongodb:
+    embedded:
+      version: 4.0.2
+  data:
+    mongodb:
+      database: test
+      port: 27018
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
+
+queue:
+  serie:
+    name: Serie-Service-Queue
+
+message: serie-service up
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+    healthcheck:
+      enabled: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

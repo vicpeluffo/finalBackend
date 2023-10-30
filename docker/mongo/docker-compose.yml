@@ -1,0 +1,9 @@
+services:
+  database:
+    image: mongo:7.0.1-rc0
+    container_name: mongodb
+    ports:
+      - '27017-27019:27017-27019'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=LocalDeveloper
+      - MONGO_INITDB_ROOT_PASSWORD=f8104adbecc0ec
